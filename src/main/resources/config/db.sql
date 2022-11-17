@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS `user_evaluation`;
+CREATE TABLE `user_evaluation` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `user_id` varchar(255) NOT NULL COMMENT '',
+    `evaluation_date` datetime DEFAULT NULL COMMENT '',
+    `study_skill` int(16) DEFAULT NULL COMMENT '',
+    `responsibility`  int(16) DEFAULT NULL COMMENT '',
+    `communication` int(16) DEFAULT NULL COMMENT '',
+    `confidence` int(16) DEFAULT NULL COMMENT '',
+    `knowledge_storage` int(16) DEFAULT NULL COMMENT '',
+    `pm_skill` int(16) DEFAULT NULL COMMENT '',
+    `operation_skill` int(16) DEFAULT NULL COMMENT '',
+    `data_analysis` int(16) DEFAULT NULL COMMENT '',
+    `office_skill` int(16) DEFAULT NULL COMMENT '',
+    `pmo_skill` int(16) DEFAULT NULL COMMENT '',
+    `team_work` int(16) DEFAULT NULL COMMENT '',
+    `promotion_training` int(16) DEFAULT NULL COMMENT '',
+    `strategic_thinking` int(16) DEFAULT NULL COMMENT '',
+    `business_thinking` int(16) DEFAULT NULL COMMENT '',
+    `decision_skill` int(16) DEFAULT NULL COMMENT '',
+    `innovation_skill` int(16) DEFAULT NULL COMMENT '',
+    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+		 PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

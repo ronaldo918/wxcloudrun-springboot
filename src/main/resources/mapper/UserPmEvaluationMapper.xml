@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencent.wxcloudrun.dao.UserPmEvaluationMapper">
+  <resultMap id="BaseResultMap" type="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="evaluation_date" jdbcType="TIMESTAMP" property="evaluationDate" />
+    <result column="study_skill" jdbcType="INTEGER" property="studySkill" />
+    <result column="responsibility" jdbcType="INTEGER" property="responsibility" />
+    <result column="communication" jdbcType="INTEGER" property="communication" />
+    <result column="confidence" jdbcType="INTEGER" property="confidence" />
+    <result column="knowledge_storage" jdbcType="INTEGER" property="knowledgeStorage" />
+    <result column="pm_skill" jdbcType="INTEGER" property="pmSkill" />
+    <result column="operation_skill" jdbcType="INTEGER" property="operationSkill" />
+    <result column="data_analysis" jdbcType="INTEGER" property="dataAnalysis" />
+    <result column="office_skill" jdbcType="INTEGER" property="officeSkill" />
+    <result column="pmo_skill" jdbcType="INTEGER" property="pmoSkill" />
+    <result column="team_work" jdbcType="INTEGER" property="teamWork" />
+    <result column="promotion_training" jdbcType="INTEGER" property="promotionTraining" />
+    <result column="strategic_thinking" jdbcType="INTEGER" property="strategicThinking" />
+    <result column="business_thinking" jdbcType="INTEGER" property="businessThinking" />
+    <result column="decision_skill" jdbcType="INTEGER" property="decisionSkill" />
+    <result column="innovation_skill" jdbcType="INTEGER" property="innovationSkill" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, evaluation_date, study_skill, responsibility, communication, confidence, 
+    knowledge_storage, pm_skill, operation_skill, data_analysis, office_skill, pmo_skill, 
+    team_work, promotion_training, strategic_thinking, business_thinking, decision_skill, 
+    innovation_skill, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_pm_evaluation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectLastOneByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_pm_evaluation
+    where user_id = #{userId,jdbcType=VARCHAR}
+    order by create_time desc limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_pm_evaluation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_pm_evaluation (user_id, evaluation_date, study_skill, 
+      responsibility, communication, confidence, 
+      knowledge_storage, pm_skill, operation_skill, 
+      data_analysis, office_skill, pmo_skill, 
+      team_work, promotion_training, strategic_thinking, 
+      business_thinking, decision_skill, innovation_skill, 
+      create_time, update_time)
+    values (#{userId,jdbcType=VARCHAR}, #{evaluationDate,jdbcType=TIMESTAMP}, #{studySkill,jdbcType=INTEGER}, 
+      #{responsibility,jdbcType=INTEGER}, #{communication,jdbcType=INTEGER}, #{confidence,jdbcType=INTEGER}, 
+      #{knowledgeStorage,jdbcType=INTEGER}, #{pmSkill,jdbcType=INTEGER}, #{operationSkill,jdbcType=INTEGER}, 
+      #{dataAnalysis,jdbcType=INTEGER}, #{officeSkill,jdbcType=INTEGER}, #{pmoSkill,jdbcType=INTEGER}, 
+      #{teamWork,jdbcType=INTEGER}, #{promotionTraining,jdbcType=INTEGER}, #{strategicThinking,jdbcType=INTEGER}, 
+      #{businessThinking,jdbcType=INTEGER}, #{decisionSkill,jdbcType=INTEGER}, #{innovationSkill,jdbcType=INTEGER},
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user_pm_evaluation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="evaluationDate != null">
+        evaluation_date,
+      </if>
+      <if test="studySkill != null">
+        study_skill,
+      </if>
+      <if test="responsibility != null">
+        responsibility,
+      </if>
+      <if test="communication != null">
+        communication,
+      </if>
+      <if test="confidence != null">
+        confidence,
+      </if>
+      <if test="knowledgeStorage != null">
+        knowledge_storage,
+      </if>
+      <if test="pmSkill != null">
+        pm_skill,
+      </if>
+      <if test="operationSkill != null">
+        operation_skill,
+      </if>
+      <if test="dataAnalysis != null">
+        data_analysis,
+      </if>
+      <if test="officeSkill != null">
+        office_skill,
+      </if>
+      <if test="pmoSkill != null">
+        pmo_skill,
+      </if>
+      <if test="teamWork != null">
+        team_work,
+      </if>
+      <if test="promotionTraining != null">
+        promotion_training,
+      </if>
+      <if test="strategicThinking != null">
+        strategic_thinking,
+      </if>
+      <if test="businessThinking != null">
+        business_thinking,
+      </if>
+      <if test="decisionSkill != null">
+        decision_skill,
+      </if>
+      <if test="innovationSkill != null">
+        innovation_skill,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationDate != null">
+        #{evaluationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studySkill != null">
+        #{studySkill,jdbcType=INTEGER},
+      </if>
+      <if test="responsibility != null">
+        #{responsibility,jdbcType=INTEGER},
+      </if>
+      <if test="communication != null">
+        #{communication,jdbcType=INTEGER},
+      </if>
+      <if test="confidence != null">
+        #{confidence,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeStorage != null">
+        #{knowledgeStorage,jdbcType=INTEGER},
+      </if>
+      <if test="pmSkill != null">
+        #{pmSkill,jdbcType=INTEGER},
+      </if>
+      <if test="operationSkill != null">
+        #{operationSkill,jdbcType=INTEGER},
+      </if>
+      <if test="dataAnalysis != null">
+        #{dataAnalysis,jdbcType=INTEGER},
+      </if>
+      <if test="officeSkill != null">
+        #{officeSkill,jdbcType=INTEGER},
+      </if>
+      <if test="pmoSkill != null">
+        #{pmoSkill,jdbcType=INTEGER},
+      </if>
+      <if test="teamWork != null">
+        #{teamWork,jdbcType=INTEGER},
+      </if>
+      <if test="promotionTraining != null">
+        #{promotionTraining,jdbcType=INTEGER},
+      </if>
+      <if test="strategicThinking != null">
+        #{strategicThinking,jdbcType=INTEGER},
+      </if>
+      <if test="businessThinking != null">
+        #{businessThinking,jdbcType=INTEGER},
+      </if>
+      <if test="decisionSkill != null">
+        #{decisionSkill,jdbcType=INTEGER},
+      </if>
+      <if test="innovationSkill != null">
+        #{innovationSkill,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
+    update user_pm_evaluation
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationDate != null">
+        evaluation_date = #{evaluationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="studySkill != null">
+        study_skill = #{studySkill,jdbcType=INTEGER},
+      </if>
+      <if test="responsibility != null">
+        responsibility = #{responsibility,jdbcType=INTEGER},
+      </if>
+      <if test="communication != null">
+        communication = #{communication,jdbcType=INTEGER},
+      </if>
+      <if test="confidence != null">
+        confidence = #{confidence,jdbcType=INTEGER},
+      </if>
+      <if test="knowledgeStorage != null">
+        knowledge_storage = #{knowledgeStorage,jdbcType=INTEGER},
+      </if>
+      <if test="pmSkill != null">
+        pm_skill = #{pmSkill,jdbcType=INTEGER},
+      </if>
+      <if test="operationSkill != null">
+        operation_skill = #{operationSkill,jdbcType=INTEGER},
+      </if>
+      <if test="dataAnalysis != null">
+        data_analysis = #{dataAnalysis,jdbcType=INTEGER},
+      </if>
+      <if test="officeSkill != null">
+        office_skill = #{officeSkill,jdbcType=INTEGER},
+      </if>
+      <if test="pmoSkill != null">
+        pmo_skill = #{pmoSkill,jdbcType=INTEGER},
+      </if>
+      <if test="teamWork != null">
+        team_work = #{teamWork,jdbcType=INTEGER},
+      </if>
+      <if test="promotionTraining != null">
+        promotion_training = #{promotionTraining,jdbcType=INTEGER},
+      </if>
+      <if test="strategicThinking != null">
+        strategic_thinking = #{strategicThinking,jdbcType=INTEGER},
+      </if>
+      <if test="businessThinking != null">
+        business_thinking = #{businessThinking,jdbcType=INTEGER},
+      </if>
+      <if test="decisionSkill != null">
+        decision_skill = #{decisionSkill,jdbcType=INTEGER},
+      </if>
+      <if test="innovationSkill != null">
+        innovation_skill = #{innovationSkill,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
+    update user_pm_evaluation
+    set user_id = #{userId,jdbcType=VARCHAR},
+      evaluation_date = #{evaluationDate,jdbcType=TIMESTAMP},
+      study_skill = #{studySkill,jdbcType=INTEGER},
+      responsibility = #{responsibility,jdbcType=INTEGER},
+      communication = #{communication,jdbcType=INTEGER},
+      confidence = #{confidence,jdbcType=INTEGER},
+      knowledge_storage = #{knowledgeStorage,jdbcType=INTEGER},
+      pm_skill = #{pmSkill,jdbcType=INTEGER},
+      operation_skill = #{operationSkill,jdbcType=INTEGER},
+      data_analysis = #{dataAnalysis,jdbcType=INTEGER},
+      office_skill = #{officeSkill,jdbcType=INTEGER},
+      pmo_skill = #{pmoSkill,jdbcType=INTEGER},
+      team_work = #{teamWork,jdbcType=INTEGER},
+      promotion_training = #{promotionTraining,jdbcType=INTEGER},
+      strategic_thinking = #{strategicThinking,jdbcType=INTEGER},
+      business_thinking = #{businessThinking,jdbcType=INTEGER},
+      decision_skill = #{decisionSkill,jdbcType=INTEGER},
+      innovation_skill = #{innovationSkill,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

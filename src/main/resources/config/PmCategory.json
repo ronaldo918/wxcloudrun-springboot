@@ -1,0 +1,98 @@
+{
+  "pmCategory": [
+    {
+      "resourceId": 1,
+      "resourceName": "study_skill",
+      "resourceDescription": "产品能力"
+    },
+    {
+      "resourceId": 2,
+      "resourceName": "responsibility",
+      "resourceDescription": "执行力/责任感"
+    },
+    {
+      "resourceId": 3,
+      "resourceName": "communication",
+      "resourceDescription": "沟通能力"
+    },
+    {
+      "resourceId": 4,
+      "resourceName": "confidence",
+      "resourceDescription": "积极/乐观/自信"
+    },
+    {
+      "resourceId": 5,
+      "resourceName": "knowledge_storage",
+      "resourceDescription": "知识储备"
+    },
+    {
+      "resourceId": 6,
+      "resourceName": "pm_skill",
+      "resourceDescription": "产品能力"
+    },
+    {
+      "resourceId": 7,
+      "resourceName": "operation_skill",
+      "resourceDescription": "运营能力"
+    },
+    {
+      "resourceId": 8,
+      "resourceName": "data_analysis",
+      "resourceDescription": "数据分析"
+    },
+    {
+      "resourceId": 9,
+      "resourceName": "office_skill",
+      "resourceDescription": "办公技能"
+    },
+    {
+      "resourceId": 10,
+      "resourceName": "pmo_skill",
+      "resourceDescription": "项目管理"
+    },
+    {
+      "resourceId": 11,
+      "resourceName": "team_work",
+      "resourceDescription": "团队管理"
+    },
+    {
+      "resourceId": 12,
+      "resourceName": "promotion_training",
+      "resourceDescription": "人才培养"
+    },
+    {
+      "resourceId": 13,
+      "resourceName": "strategic_thinking",
+      "resourceDescription": "战略思维"
+    },
+    {
+      "resourceId": 14,
+      "resourceName": "business_thinking",
+      "resourceDescription": "商业思维"
+    },
+    {
+      "resourceId": 15,
+      "resourceName": "decision_skill",
+      "resourceDescription": "决策能力"
+    },
+    {
+      "resourceId": 16,
+      "resourceName": "innovation_skill",
+      "resourceDescription": "创新能力"
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

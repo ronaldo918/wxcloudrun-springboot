@@ -18,7 +18,7 @@ import javax.validation.constraints.NotBlank;
 @SuperBuilder
 public class FinishedNumReq {
 
-    @NotBlank(message = "userId can not be blank")
-    public String userId;
+    @NotBlank(message = "openId can not be blank")
+    public String openId;
 
 }

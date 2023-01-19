@@ -1,13 +1,19 @@
 package com.tencent.wxcloudrun.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.tencent.wxcloudrun.client.WechatClient;
 import com.tencent.wxcloudrun.dao.UserPmEvaluationMapper;
+import com.tencent.wxcloudrun.dto.ApiResult;
+import com.tencent.wxcloudrun.dto.LoginDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
-import com.tencent.wxcloudrun.service.IUserPmEvaluation;
+import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,15 +25,26 @@ import javax.annotation.Resource;
  **/
 @Slf4j
 @Service
-public class UserPmEvaluationImpl implements IUserPmEvaluation {
+public class UserPmEvaluationImplService implements IUserPmEvaluationService {
+
+    @Value("${app.id}")
+    private String appId;
+
+    @Value("${app.secret}")
+    private String appSecret;
+
+    @Value("${app.grantType}")
+    private String grantType;
 
     @Resource
     private UserPmEvaluationMapper userPmEvaluationMapper;
+    @Resource
+    private WechatClient wechatClient;
 
     @Override
     public Boolean create(UserPmEvaluationDto userPmEvaluationDto) {
         UserPmEvaluationModel userPmEvaluationModel = new UserPmEvaluationModel();
-        BeanUtils.copyProperties(userPmEvaluationDto,userPmEvaluationModel);
+        BeanUtils.copyProperties(userPmEvaluationDto, userPmEvaluationModel);
         Integer[] skills = userPmEvaluationDto.getSkills();
         userPmEvaluationModel.setStudySkill(skills[0]);
         userPmEvaluationModel.setResponsibility(skills[1]);
@@ -54,6 +71,22 @@ public class UserPmEvaluationImpl implements IUserPmEvaluation {
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
         BeanUtils.copyProperties(userPmEvaluationModel, userPmEvaluationDto);
         return userPmEvaluationDto;
+    }
+
+    @Override
+    public ApiResult<LoginDto> wechatLogin(String jsCode) {
+
+        String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
+        JSONObject jsonObject = JSON.parseObject(result);
+        if (null == jsonObject || !jsonObject.get("errcode").equals(0)) {
+            return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
+        }
+        LoginDto loginDto = LoginDto.builder().openid(String.valueOf(jsonObject.get("openid")))
+                .unionid(String.valueOf(jsonObject.get("unionid")))
+                .sessionKey(String.valueOf(jsonObject.get("session_key")))
+                .build();
+
+        return ApiResult.success(loginDto);
     }
 
 }

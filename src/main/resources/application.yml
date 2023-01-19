@@ -11,10 +11,17 @@ spring:
     view:
       suffix: .html
       prefix: /
-
+api:
+  wechat:
+    baseurl: https://api.weixin.qq.com/
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
   typeAliasesPackage: com.innovation.pm.skill.survey.repository
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+app:
+  id: wxbc5a109c3f8b9821
+  secret: af5db3e769f5a248887eeae60fa49230
+  grantType: authorization_code

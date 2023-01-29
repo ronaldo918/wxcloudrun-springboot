@@ -4,10 +4,12 @@ package com.tencent.wxcloudrun.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.client.WechatClient;
+import com.tencent.wxcloudrun.dao.CategoryItemMapper;
 import com.tencent.wxcloudrun.dao.UserPmEvaluationMapper;
 import com.tencent.wxcloudrun.dto.ApiResult;
 import com.tencent.wxcloudrun.dto.LoginDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
+import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
@@ -39,35 +41,81 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Resource
     private UserPmEvaluationMapper userPmEvaluationMapper;
     @Resource
+    private CategoryItemMapper categoryItemMapper;
+    @Resource
     private WechatClient wechatClient;
 
     @Override
     public Boolean create(UserPmEvaluationDto userPmEvaluationDto) {
         UserPmEvaluationModel userPmEvaluationModel = new UserPmEvaluationModel();
         BeanUtils.copyProperties(userPmEvaluationDto, userPmEvaluationModel);
-        Integer[] skills = userPmEvaluationDto.getSkills();
-        userPmEvaluationModel.setStudySkill(skills[0]);
-        userPmEvaluationModel.setResponsibility(skills[1]);
-        userPmEvaluationModel.setCommunication(skills[2]);
-        userPmEvaluationModel.setConfidence(skills[3]);
-        userPmEvaluationModel.setKnowledgeStorage(skills[4]);
-        userPmEvaluationModel.setPmSkill(skills[5]);
-        userPmEvaluationModel.setOperationSkill(skills[6]);
-        userPmEvaluationModel.setDataAnalysis(skills[7]);
-        userPmEvaluationModel.setOfficeSkill(skills[8]);
-        userPmEvaluationModel.setPmoSkill(skills[9]);
-        userPmEvaluationModel.setTeamWork(skills[10]);
-        userPmEvaluationModel.setPromotionTraining(skills[11]);
-        userPmEvaluationModel.setStrategicThinking(skills[12]);
-        userPmEvaluationModel.setBusinessThinking(skills[13]);
-        userPmEvaluationModel.setDecisionSkill(skills[14]);
-        userPmEvaluationModel.setInnovationSkill(skills[15]);
+        String[] skills = userPmEvaluationDto.getSkills();
+
+        for (int i = 1; i <= 16; i++) {
+            int index = i - 1;
+            Integer score = categoryItemMapper.getQuestionScore(String.valueOf(i), skills[index]);
+            if (null == score) {
+                score = 0;
+            }
+            switch (i) {
+                case 1:
+                    userPmEvaluationModel.setStudySkill(score);
+                    break;
+                case 2:
+                    userPmEvaluationModel.setResponsibility(score);
+                    break;
+                case 3:
+                    userPmEvaluationModel.setCommunication(score);
+                    break;
+                case 4:
+                    userPmEvaluationModel.setConfidence(score);
+                    break;
+                case 5:
+                    userPmEvaluationModel.setKnowledgeStorage(score);
+                    break;
+                case 6:
+                    userPmEvaluationModel.setPmSkill(score);
+                    break;
+                case 7:
+                    userPmEvaluationModel.setOperationSkill(score);
+                    break;
+                case 8:
+                    userPmEvaluationModel.setDataAnalysis(score);
+                    break;
+                case 9:
+                    userPmEvaluationModel.setOfficeSkill(score);
+                    break;
+                case 10:
+                    userPmEvaluationModel.setPmoSkill(score);
+                    break;
+                case 11:
+                    userPmEvaluationModel.setTeamWork(score);
+                    break;
+                case 12:
+                    userPmEvaluationModel.setPromotionTraining(score);
+                    break;
+                case 13:
+                    userPmEvaluationModel.setStrategicThinking(score);
+                    break;
+                case 14:
+                    userPmEvaluationModel.setBusinessThinking(score);
+                    break;
+                case 15:
+                    userPmEvaluationModel.setDecisionSkill(score);
+                    break;
+                case 16:
+                    userPmEvaluationModel.setInnovationSkill(score);
+                    break;
+                default:
+                    break;
+            }
+        }
         return userPmEvaluationMapper.insert(userPmEvaluationModel) > 0;
     }
 
     @Override
     public UserPmEvaluationDto getLastResult(GetLastResultReq getLastResultReq) {
-        UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(getLastResultReq.getUserId());
+        UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(getLastResultReq.getOpenId());
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
         BeanUtils.copyProperties(userPmEvaluationModel, userPmEvaluationDto);
         return userPmEvaluationDto;
@@ -75,18 +123,22 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
 
     @Override
     public ApiResult<LoginDto> wechatLogin(String jsCode) {
+        try {
+            String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
+            JSONObject jsonObject = JSON.parseObject(result);
+            if (null == jsonObject || !jsonObject.get("errcode").equals(0)) {
+                //return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
+                return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
+            }
+            LoginDto loginDto = LoginDto.builder().openid(String.valueOf(jsonObject.get("openid")))
+                    .unionid(String.valueOf(jsonObject.get("unionid")))
+                    .sessionKey(String.valueOf(jsonObject.get("session_key")))
+                    .build();
 
-        String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
-        JSONObject jsonObject = JSON.parseObject(result);
-        if (null == jsonObject || !jsonObject.get("errcode").equals(0)) {
-            return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
+            return ApiResult.success(loginDto);
+        } catch (Exception ex) {
+            return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
         }
-        LoginDto loginDto = LoginDto.builder().openid(String.valueOf(jsonObject.get("openid")))
-                .unionid(String.valueOf(jsonObject.get("unionid")))
-                .sessionKey(String.valueOf(jsonObject.get("session_key")))
-                .build();
-
-        return ApiResult.success(loginDto);
     }
 
 }

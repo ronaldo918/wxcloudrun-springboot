@@ -7,17 +7,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserPmEvaluationMapper {
-    int deleteByPrimaryKey(Long id);
 
     int insert(UserPmEvaluationModel record);
 
-    int insertSelective(UserPmEvaluationModel record);
 
-    UserPmEvaluationModel selectByPrimaryKey(Long id);
+    UserPmEvaluationModel selectLastOneByUserId(String openId);
 
-    UserPmEvaluationModel selectLastOneByUserId(String userId);
-
-    int updateByPrimaryKeySelective(UserPmEvaluationModel record);
-
-    int updateByPrimaryKey(UserPmEvaluationModel record);
 }

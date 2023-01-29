@@ -19,7 +19,7 @@ import java.util.Date;
 public class UserPmEvaluationModel {
     private Long id;
 
-    private String userId;
+    private String openId;
 
     private Date evaluationDate;
 

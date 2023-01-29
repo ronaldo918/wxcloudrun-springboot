@@ -15,5 +15,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class GetLastResultReq {
-    private String userId;
+    private String openId;
 }

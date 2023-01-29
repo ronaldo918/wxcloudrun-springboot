@@ -22,12 +22,12 @@ import java.util.Date;
 public class UserPmEvaluationDto {
     private Long id;
 
-    private String userId;
+    private String openId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date evaluationDate;
 
-    private Integer[] skills;
+    private String[] skills;
 
     private Integer studySkill;
 

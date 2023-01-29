@@ -1,12 +1,11 @@
 package com.tencent.wxcloudrun.controller;
 
-import com.tencent.wxcloudrun.dto.ApiResult;
-import com.tencent.wxcloudrun.dto.LoginDto;
-import com.tencent.wxcloudrun.dto.PmCategoryDto;
-import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
+import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.external.FinishedNumReq;
 import com.tencent.wxcloudrun.external.FinishedNumResp;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
+import com.tencent.wxcloudrun.model.CategoryItemModel;
+import com.tencent.wxcloudrun.service.ICategoryItemService;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
 import com.tencent.wxcloudrun.util.PmCategoryUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +28,8 @@ public class SkillTestController {
 
     @Resource
     private IUserPmEvaluationService userPmEvaluationService;
+    @Resource
+    private ICategoryItemService categoryItemService;
 
 
     @PostMapping(value = "/finishedNum")
@@ -58,6 +59,18 @@ public class SkillTestController {
     @PostMapping(value = "/getLastResult")
     public ApiResult<UserPmEvaluationDto> getLastResult(@RequestBody GetLastResultReq getLastResultReq){
         UserPmEvaluationDto result = userPmEvaluationService.getLastResult(getLastResultReq);
+        return ApiResult.success(result);
+    }
+
+    @GetMapping(value = "/getCategoryItemList")
+    public ApiResult<List<CategoryItemModel>> getCategoryItemList(@RequestParam String resourceId){
+        List<CategoryItemModel> result = categoryItemService.selectByResouceId(resourceId);
+        return ApiResult.success(result);
+    }
+
+    @GetMapping(value = "/listQuestion")
+    public ApiResult<List<QuestionItemDto>> listQuestion(){
+        List<QuestionItemDto> result = categoryItemService.listQuestion();
         return ApiResult.success(result);
     }
 }

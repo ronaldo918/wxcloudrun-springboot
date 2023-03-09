@@ -125,6 +125,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     public ApiResult<LoginDto> wechatLogin(String jsCode) {
         try {
             String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
+            log.info("UserPmEvaluationImplService,wechatLogin, result={}", result);
             JSONObject jsonObject = JSON.parseObject(result);
             if (null == jsonObject || !jsonObject.get("errcode").equals(0)) {
                 //return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
@@ -137,6 +138,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
 
             return ApiResult.success(loginDto);
         } catch (Exception ex) {
+            log.error("UserPmEvaluationImplService,wechatLogin, ex", ex);
             return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
         }
     }

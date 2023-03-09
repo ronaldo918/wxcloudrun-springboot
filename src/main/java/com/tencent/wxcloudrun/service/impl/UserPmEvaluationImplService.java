@@ -127,7 +127,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
             log.info("UserPmEvaluationImplService,wechatLogin, result={}", result);
             JSONObject jsonObject = JSON.parseObject(result);
-            if (null == jsonObject || !jsonObject.get("errcode").equals(0)) {
+            if (null == jsonObject || (jsonObject.containsKey("errcode") && !jsonObject.get("errcode").equals(0))) {
                 //return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
                 return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
             }
@@ -141,6 +141,6 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             log.error("UserPmEvaluationImplService,wechatLogin, ex", ex);
             return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
         }
-    }
 
+    }
 }

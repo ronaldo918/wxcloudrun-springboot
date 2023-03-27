@@ -40,6 +40,14 @@
     order by create_time desc limit 1
   </select>
 
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_pm_evaluation
+    where id = #{id,jdbcType=BIGINT}
+    order by create_time desc limit 1
+  </select>
+
   <insert id="insert" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()

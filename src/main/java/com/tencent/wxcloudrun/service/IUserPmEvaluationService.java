@@ -15,6 +15,9 @@ public interface IUserPmEvaluationService {
 
     Boolean create(UserPmEvaluationDto userPmEvaluationDto);
 
+
+    UserPmEvaluationDto detailUserPmEvaluation(Long id);
+
     UserPmEvaluationDto getLastResult(GetLastResultReq getLastResultReq);
 
     ApiResult<LoginDto> wechatLogin(String jsCode);

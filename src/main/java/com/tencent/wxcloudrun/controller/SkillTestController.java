@@ -58,9 +58,12 @@ public class SkillTestController {
     }
 
     @PostMapping(value = "/detail")
-    public ApiResult<Boolean> userPmEvaluationDetail(@RequestBody UserPmEvaluationDetailDto userPmEvaluationDetailDto){
-//        Boolean result = userPmEvaluationService.create(userPmEvaluationDto);
-        return ApiResult.success();
+    public ApiResult<UserPmEvaluationDto> userPmEvaluationDetail(@RequestParam Long id){
+        UserPmEvaluationDto result = userPmEvaluationService.detailUserPmEvaluation(id);
+        if(null == result) {
+            return ApiResult.error(ErrorCodeEnum.USER_NO_RECORD);
+        }
+        return ApiResult.success(result);
     }
 
     @PostMapping(value = "/getLastResult")

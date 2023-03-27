@@ -13,4 +13,7 @@ public interface UserPmEvaluationMapper {
 
     UserPmEvaluationModel selectLastOneByUserId(String openId);
 
+
+    UserPmEvaluationModel selectById(Long id);
+
 }

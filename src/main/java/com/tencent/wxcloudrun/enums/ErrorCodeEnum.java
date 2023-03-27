@@ -23,6 +23,8 @@ public enum ErrorCodeEnum {
 
     LOGIN_ERROR("000006", "login error", "登录失败"),
 
+    USER_NO_RECORD("000007", "user no record", "该用户没有测评记录"),
+
     ;
 
     private String value;

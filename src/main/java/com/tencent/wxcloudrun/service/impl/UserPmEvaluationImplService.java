@@ -116,6 +116,9 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Override
     public UserPmEvaluationDto getLastResult(GetLastResultReq getLastResultReq) {
         UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(getLastResultReq.getOpenId());
+        if(null == userPmEvaluationModel){
+            return null;
+        }
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
         BeanUtils.copyProperties(userPmEvaluationModel, userPmEvaluationDto);
         return userPmEvaluationDto;

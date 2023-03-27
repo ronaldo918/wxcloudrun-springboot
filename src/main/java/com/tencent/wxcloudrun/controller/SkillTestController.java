@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.dto.*;
+import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.external.FinishedNumReq;
 import com.tencent.wxcloudrun.external.FinishedNumResp;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
@@ -56,9 +57,18 @@ public class SkillTestController {
         return ApiResult.success(result);
     }
 
+    @PostMapping(value = "/detail")
+    public ApiResult<Boolean> userPmEvaluationDetail(@RequestBody UserPmEvaluationDetailDto userPmEvaluationDetailDto){
+//        Boolean result = userPmEvaluationService.create(userPmEvaluationDto);
+        return ApiResult.success();
+    }
+
     @PostMapping(value = "/getLastResult")
     public ApiResult<UserPmEvaluationDto> getLastResult(@RequestBody GetLastResultReq getLastResultReq){
         UserPmEvaluationDto result = userPmEvaluationService.getLastResult(getLastResultReq);
+        if(null == result) {
+            return ApiResult.error(ErrorCodeEnum.USER_NO_RECORD);
+        }
         return ApiResult.success(result);
     }
 
@@ -68,7 +78,7 @@ public class SkillTestController {
         return ApiResult.success(result);
     }
 
-    @GetMapping(value = "/listQuestion")
+    @PostMapping(value = "/listQuestion")
     public ApiResult<List<QuestionItemDto>> listQuestion(){
         List<QuestionItemDto> result = categoryItemService.listQuestion();
         return ApiResult.success(result);

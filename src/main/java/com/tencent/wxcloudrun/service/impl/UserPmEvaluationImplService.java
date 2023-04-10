@@ -5,15 +5,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.wxcloudrun.client.WechatClient;
 import com.tencent.wxcloudrun.dao.CategoryItemMapper;
+import com.tencent.wxcloudrun.dao.PmUserMapper;
 import com.tencent.wxcloudrun.dao.UserPmEvaluationMapper;
 import com.tencent.wxcloudrun.dto.ApiResult;
 import com.tencent.wxcloudrun.dto.LoginDto;
+import com.tencent.wxcloudrun.dto.UserDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
+import com.tencent.wxcloudrun.model.UserModel;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,6 +46,8 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     private UserPmEvaluationMapper userPmEvaluationMapper;
     @Resource
     private CategoryItemMapper categoryItemMapper;
+    @Resource
+    private PmUserMapper pmUserMapper;
     @Resource
     private WechatClient wechatClient;
 
@@ -118,7 +124,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
 
         UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectById(id);
 
-        if(null == userPmEvaluationModel){
+        if (null == userPmEvaluationModel) {
             return null;
         }
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
@@ -130,7 +136,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Override
     public UserPmEvaluationDto getLastResult(GetLastResultReq getLastResultReq) {
         UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(getLastResultReq.getOpenId());
-        if(null == userPmEvaluationModel){
+        if (null == userPmEvaluationModel) {
             return null;
         }
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
@@ -159,5 +165,18 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
         }
 
+    }
+
+    @Override
+    public ApiResult<String> addUser(UserDto userDto) {
+        try {
+            UserModel userModel = new UserModel();
+            BeanUtils.copyProperties(userDto, userModel);
+            pmUserMapper.insert(userModel);
+            return ApiResult.success(userDto.getOpenId());
+        } catch (Exception ex) {
+            log.error("UserPmEvaluationImplService,addUser, ex", ex);
+            return ApiResult.error(ErrorCodeEnum.INSERT_USER_ERROR);
+        }
     }
 }

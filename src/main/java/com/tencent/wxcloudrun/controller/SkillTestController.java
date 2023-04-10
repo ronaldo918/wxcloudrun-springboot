@@ -86,4 +86,10 @@ public class SkillTestController {
         List<QuestionItemDto> result = categoryItemService.listQuestion();
         return ApiResult.success(result);
     }
+
+    @PostMapping(value = "/addUser")
+    public ApiResult<String> addUser(@RequestBody UserDto userDto){
+        ApiResult<String> result = userPmEvaluationService.addUser(userDto);
+        return result;
+    }
 }

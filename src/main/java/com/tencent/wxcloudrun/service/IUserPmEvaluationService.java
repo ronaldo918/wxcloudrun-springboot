@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.service;
 
 import com.tencent.wxcloudrun.dto.ApiResult;
 import com.tencent.wxcloudrun.dto.LoginDto;
+import com.tencent.wxcloudrun.dto.UserDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
 
@@ -21,4 +22,7 @@ public interface IUserPmEvaluationService {
     UserPmEvaluationDto getLastResult(GetLastResultReq getLastResultReq);
 
     ApiResult<LoginDto> wechatLogin(String jsCode);
+
+
+    ApiResult<String> addUser(UserDto userDto);
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencent.wxcloudrun.dao.PmUserMapper">
+  <resultMap id="BaseResultMap" type="com.tencent.wxcloudrun.model.UserModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="product_type" jdbcType="TIMESTAMP" property="productType" />
+    <result column="job" jdbcType="INTEGER" property="job" />
+    <result column="start_work_time" jdbcType="INTEGER" property="startWorkTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, open_id, product_type, job, start_work_time, create_time, update_time
+  </sql>
+
+
+  <insert id="insert" parameterType="com.tencent.wxcloudrun.model.UserModel">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pm_user (open_id, product_type, job,
+    start_work_time, create_time, update_time)
+    values (#{openId,jdbcType=VARCHAR}, #{productType,jdbcType=INTEGER}, #{job,jdbcType=INTEGER},
+      #{startWorkTime,jdbcType=DATE}, now(), now())
+  </insert>
+
+  <select id="selectOne" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pm_user
+    where open_id = #{openId,jdbcType=VARCHAR}
+    order by create_time desc limit 1
+  </select>
+
+</mapper>

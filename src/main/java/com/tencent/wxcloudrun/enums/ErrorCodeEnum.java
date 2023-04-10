@@ -25,6 +25,8 @@ public enum ErrorCodeEnum {
 
     USER_NO_RECORD("000007", "user no record", "该用户没有测评记录"),
 
+    INSERT_USER_ERROR("000008", "add user error", "新增用户错误"),
+
     ;
 
     private String value;

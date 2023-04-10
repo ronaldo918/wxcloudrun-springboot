@@ -1,0 +1,36 @@
+package com.tencent.wxcloudrun.dto;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+import java.util.Date;
+
+/**
+ * @description:
+ * @author: liushanping
+ * @time: 2022/10/18 17:32
+ */
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
+@SuperBuilder
+@JsonSerialize
+public class UserDto {
+    private Long id;
+
+    private String openId;
+
+    private Integer productType;
+
+    private Integer job;
+
+    private String startWorkTime;
+
+    private Date createTime;
+
+    private Date updateTime;
+
+}

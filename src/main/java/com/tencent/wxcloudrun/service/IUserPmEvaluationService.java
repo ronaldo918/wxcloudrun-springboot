@@ -6,6 +6,9 @@ import com.tencent.wxcloudrun.dto.LoginDto;
 import com.tencent.wxcloudrun.dto.UserDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
+import com.tencent.wxcloudrun.external.UserEvaluatedReq;
+import com.tencent.wxcloudrun.external.UserExistedReq;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author: lsp
@@ -25,4 +28,11 @@ public interface IUserPmEvaluationService {
 
 
     ApiResult<String> addUser(UserDto userDto);
+
+
+    Boolean userExisted(UserExistedReq userExistedReq);
+
+    Boolean userEvaluated(UserEvaluatedReq userEvaluatedReq);
+
+
 }

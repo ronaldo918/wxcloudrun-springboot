@@ -13,6 +13,8 @@ import com.tencent.wxcloudrun.dto.UserDto;
 import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.external.GetLastResultReq;
+import com.tencent.wxcloudrun.external.UserEvaluatedReq;
+import com.tencent.wxcloudrun.external.UserExistedReq;
 import com.tencent.wxcloudrun.model.UserModel;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
@@ -178,5 +180,25 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             log.error("UserPmEvaluationImplService,addUser, ex", ex);
             return ApiResult.error(ErrorCodeEnum.INSERT_USER_ERROR);
         }
+    }
+
+    @Override
+    public Boolean userExisted(UserExistedReq userExistedReq) {
+
+        UserModel userModel = pmUserMapper.selectOne(userExistedReq.getOpenId());
+        if(null == userModel) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public Boolean userEvaluated(UserEvaluatedReq userEvaluatedReq) {
+        UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(userEvaluatedReq.getOpenId());
+        if(null == userPmEvaluationModel) {
+            return false;
+        }
+        return true;
     }
 }

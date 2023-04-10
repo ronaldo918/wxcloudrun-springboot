@@ -2,9 +2,7 @@ package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
-import com.tencent.wxcloudrun.external.FinishedNumReq;
-import com.tencent.wxcloudrun.external.FinishedNumResp;
-import com.tencent.wxcloudrun.external.GetLastResultReq;
+import com.tencent.wxcloudrun.external.*;
 import com.tencent.wxcloudrun.model.CategoryItemModel;
 import com.tencent.wxcloudrun.service.ICategoryItemService;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
@@ -91,5 +89,17 @@ public class SkillTestController {
     public ApiResult<String> addUser(@RequestBody UserDto userDto){
         ApiResult<String> result = userPmEvaluationService.addUser(userDto);
         return result;
+    }
+
+    @PostMapping(value = "/userExisted")
+    public ApiResult<Boolean> userExisted(@RequestBody UserExistedReq userExistedReq){
+        Boolean result = userPmEvaluationService.userExisted(userExistedReq);
+        return ApiResult.success(result);
+    }
+
+    @PostMapping(value = "/userEvaluated")
+    public ApiResult<Boolean> userEvaluated(@RequestBody UserEvaluatedReq userEvaluatedReq){
+        Boolean result = userPmEvaluationService.userEvaluated(userEvaluatedReq);
+        return ApiResult.success(result);
     }
 }

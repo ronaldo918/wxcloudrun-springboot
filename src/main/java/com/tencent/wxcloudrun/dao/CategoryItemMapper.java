@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.model.CategoryItemModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -14,7 +15,7 @@ public interface CategoryItemMapper {
 
     List<CategoryItemModel> selectByResourceId(String resourceId);
 
-    Integer getQuestionScore(String resourceId, String itemGrade);
+    BigDecimal getQuestionScore(String resourceId, String itemGrade);
 
 
 

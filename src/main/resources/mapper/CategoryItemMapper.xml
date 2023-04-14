@@ -11,7 +11,7 @@
     item_grade_order,
     item_title,
     item_content,
-    item_count,
+    score,
     create_time,
     update_time
   </sql>
@@ -23,9 +23,9 @@
     order by resource_order,item_grade_order
   </select>
 
-    <select id="getQuestionScore" resultType="java.lang.Integer">
+    <select id="getQuestionScore" resultType="java.math.BigDecimal">
         select
-            item_count
+            score
         from category_item
         where
             resource_id = #{resourceId}
@@ -47,7 +47,7 @@
         item_grade_order,
         item_title,
         item_content,
-        item_count,
+        score,
         create_time,
         update_time
     )
@@ -60,7 +60,7 @@
       #{record.itemGradeOrder},
       #{record.itemTitle},
       #{record.itemContent},
-      #{record.itemCount},
+      #{record.score},
       now(),
       now()
     )

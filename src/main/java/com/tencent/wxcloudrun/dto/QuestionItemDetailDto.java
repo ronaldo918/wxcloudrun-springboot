@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 /**
  * @description:
  * @author: liushanping
@@ -18,11 +20,11 @@ import lombok.experimental.SuperBuilder;
 public class QuestionItemDetailDto {
     private String title;
     private String content;
-    private Integer count;
+    private BigDecimal score;
 
     public QuestionItemDetailDto(CategoryItemModel categoryItemModel){
         title = categoryItemModel.getItemTitle();
         content = categoryItemModel.getItemContent();
-        count = categoryItemModel.getItemCount();
+        score = categoryItemModel.getScore();
     }
 }

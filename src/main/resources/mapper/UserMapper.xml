@@ -4,14 +4,18 @@
   <resultMap id="BaseResultMap" type="com.tencent.wxcloudrun.model.UserModel">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
-    <result column="product_type" jdbcType="TIMESTAMP" property="productType" />
+    <result column="product_type" jdbcType="INTEGER" property="productType" />
     <result column="job" jdbcType="INTEGER" property="job" />
-    <result column="start_work_time" jdbcType="INTEGER" property="startWorkTime" />
+    <result column="product_detail" jdbcType="INTEGER" property="productDetail" />
+    <result column="industry" jdbcType="INTEGER" property="industry" />
+    <result column="start_work_time" jdbcType="TIMESTAMP" property="startWorkTime" />
+    <result column="ranking" jdbcType="INTEGER" property="ranking" />
+    <result column="percent" jdbcType="DECIMAL" property="percent" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, open_id, product_type, job, start_work_time, create_time, update_time
+    id, open_id, product_type, job, product_detail, industry, ranking, percent, start_work_time, create_time, update_time
   </sql>
 
 
@@ -19,10 +23,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into pm_user (open_id, product_type, job,
-    start_work_time, create_time, update_time)
+    insert into pm_user (open_id, product_type, job, product_detail, industry,
+    start_work_time, ranking, percent, create_time, update_time)
     values (#{openId,jdbcType=VARCHAR}, #{productType,jdbcType=INTEGER}, #{job,jdbcType=INTEGER},
-      #{startWorkTime,jdbcType=DATE}, now(), now())
+    #{productDetail,jdbcType=INTEGER}, #{industry,jdbcType=INTEGER}, #{startWorkTime,jdbcType=DATE}, #{ranking,jdbcType=INTEGER},
+    #{percent,jdbcType=DECIMAL}, now(), now())
   </insert>
 
   <select id="selectOne" resultMap="BaseResultMap">

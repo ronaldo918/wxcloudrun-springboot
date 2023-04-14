@@ -5,30 +5,43 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="evaluation_date" jdbcType="TIMESTAMP" property="evaluationDate" />
-    <result column="study_skill" jdbcType="INTEGER" property="studySkill" />
-    <result column="responsibility" jdbcType="INTEGER" property="responsibility" />
-    <result column="communication" jdbcType="INTEGER" property="communication" />
-    <result column="confidence" jdbcType="INTEGER" property="confidence" />
-    <result column="knowledge_storage" jdbcType="INTEGER" property="knowledgeStorage" />
-    <result column="pm_skill" jdbcType="INTEGER" property="pmSkill" />
-    <result column="operation_skill" jdbcType="INTEGER" property="operationSkill" />
-    <result column="data_analysis" jdbcType="INTEGER" property="dataAnalysis" />
-    <result column="office_skill" jdbcType="INTEGER" property="officeSkill" />
-    <result column="pmo_skill" jdbcType="INTEGER" property="pmoSkill" />
-    <result column="team_work" jdbcType="INTEGER" property="teamWork" />
-    <result column="promotion_training" jdbcType="INTEGER" property="promotionTraining" />
-    <result column="strategic_thinking" jdbcType="INTEGER" property="strategicThinking" />
-    <result column="business_thinking" jdbcType="INTEGER" property="businessThinking" />
-    <result column="decision_skill" jdbcType="INTEGER" property="decisionSkill" />
-    <result column="innovation_skill" jdbcType="INTEGER" property="innovationSkill" />
+    <result column="study_skill" jdbcType="DECIMAL" property="studySkill" />
+    <result column="responsibility" jdbcType="DECIMAL" property="responsibility" />
+    <result column="communication" jdbcType="DECIMAL" property="communication" />
+    <result column="confidence" jdbcType="DECIMAL" property="confidence" />
+    <result column="knowledge_storage" jdbcType="DECIMAL" property="knowledgeStorage" />
+    <result column="pm_skill" jdbcType="DECIMAL" property="pmSkill" />
+    <result column="operation_skill" jdbcType="DECIMAL" property="operationSkill" />
+    <result column="data_analysis" jdbcType="DECIMAL" property="dataAnalysis" />
+    <result column="office_skill" jdbcType="DECIMAL" property="officeSkill" />
+    <result column="pmo_skill" jdbcType="DECIMAL" property="pmoSkill" />
+    <result column="team_work" jdbcType="DECIMAL" property="teamWork" />
+    <result column="promotion_training" jdbcType="DECIMAL" property="promotionTraining" />
+    <result column="strategic_thinking" jdbcType="DECIMAL" property="strategicThinking" />
+    <result column="business_thinking" jdbcType="DECIMAL" property="businessThinking" />
+    <result column="decision_skill" jdbcType="DECIMAL" property="decisionSkill" />
+    <result column="innovation_skill" jdbcType="DECIMAL" property="innovationSkill" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="ranking" jdbcType="INTEGER" property="ranking" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="percent" jdbcType="DECIMAL" property="percent" />
+    <result column="tencent_grade" jdbcType="VARCHAR" property="tencentGrade" />
+    <result column="byte_grade" jdbcType="VARCHAR" property="byteGrade" />
+    <result column="ali_grade" jdbcType="VARCHAR" property="aliGrade" />
+    <result column="meituan_grade" jdbcType="VARCHAR" property="meituanGrade" />
+
+
+
+
+
   </resultMap>
   <sql id="Base_Column_List">
     id, open_id, evaluation_date, study_skill, responsibility, communication, confidence,
     knowledge_storage, pm_skill, operation_skill, data_analysis, office_skill, pmo_skill, 
     team_work, promotion_training, strategic_thinking, business_thinking, decision_skill, 
-    innovation_skill, create_time, update_time
+    innovation_skill,ranking,score, percent, create_time, update_time,tencent_grade,byte_grade,
+    ali_grade,meituan_grade
   </sql>
 
   <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -67,14 +80,15 @@
       data_analysis, office_skill, pmo_skill, 
       team_work, promotion_training, strategic_thinking, 
       business_thinking, decision_skill, innovation_skill, 
-      create_time, update_time)
-    values (#{openId,jdbcType=VARCHAR}, #{evaluationDate,jdbcType=TIMESTAMP}, #{studySkill,jdbcType=INTEGER},
-      #{responsibility,jdbcType=INTEGER}, #{communication,jdbcType=INTEGER}, #{confidence,jdbcType=INTEGER}, 
-      #{knowledgeStorage,jdbcType=INTEGER}, #{pmSkill,jdbcType=INTEGER}, #{operationSkill,jdbcType=INTEGER}, 
-      #{dataAnalysis,jdbcType=INTEGER}, #{officeSkill,jdbcType=INTEGER}, #{pmoSkill,jdbcType=INTEGER}, 
-      #{teamWork,jdbcType=INTEGER}, #{promotionTraining,jdbcType=INTEGER}, #{strategicThinking,jdbcType=INTEGER}, 
-      #{businessThinking,jdbcType=INTEGER}, #{decisionSkill,jdbcType=INTEGER}, #{innovationSkill,jdbcType=INTEGER},
-      now(), now())
+      create_time, update_time,ranking,score, percent, tencent_grade, byte_grade, ali_grade, meituan_grade)
+    values (#{openId,jdbcType=VARCHAR}, #{evaluationDate,jdbcType=TIMESTAMP}, #{studySkill,jdbcType=DECIMAL},
+      #{responsibility,jdbcType=DECIMAL}, #{communication,jdbcType=DECIMAL}, #{confidence,jdbcType=DECIMAL},
+      #{knowledgeStorage,jdbcType=DECIMAL}, #{pmSkill,jdbcType=DECIMAL}, #{operationSkill,jdbcType=DECIMAL},
+      #{dataAnalysis,jdbcType=DECIMAL}, #{officeSkill,jdbcType=DECIMAL}, #{pmoSkill,jdbcType=DECIMAL},
+      #{teamWork,jdbcType=DECIMAL}, #{promotionTraining,jdbcType=DECIMAL}, #{strategicThinking,jdbcType=DECIMAL},
+      #{businessThinking,jdbcType=DECIMAL}, #{decisionSkill,jdbcType=DECIMAL}, #{innovationSkill,jdbcType=DECIMAL},
+      now(), now(), #{ranking,jdbcType=INTEGER}, #{score,jdbcType=DECIMAL}, #{percent,jdbcType=DECIMAL}
+    , #{tencentGrade,jdbcType=VARCHAR}, #{byteGrade,jdbcType=VARCHAR}, #{aliGrade,jdbcType=VARCHAR}, #{meituanGrade,jdbcType=VARCHAR})
   </insert>
 
 </mapper>

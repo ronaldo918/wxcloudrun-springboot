@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -27,7 +28,15 @@ public class UserDto {
 
     private Integer job;
 
+    private Integer productDetail;
+
+    private Integer industry;
+
     private String startWorkTime;
+
+    private Integer ranking;
+
+    private BigDecimal percent;
 
     private Date createTime;
 

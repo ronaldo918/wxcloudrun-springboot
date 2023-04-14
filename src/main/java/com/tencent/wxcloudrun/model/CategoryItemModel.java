@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -35,7 +36,7 @@ public class CategoryItemModel {
 
     private String itemContent;
 
-    private Integer itemCount;
+    private BigDecimal score;
 
     private Date createTime;
 

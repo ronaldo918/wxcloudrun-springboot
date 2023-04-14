@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.beans.BeanUtils;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -39,35 +40,49 @@ public class UserPmEvaluationDto {
 
     private String[] skills;
 
-    private Integer studySkill;
+    private BigDecimal studySkill;
 
-    private Integer responsibility;
+    private BigDecimal responsibility;
 
-    private Integer communication;
+    private BigDecimal communication;
 
-    private Integer confidence;
+    private BigDecimal confidence;
 
-    private Integer knowledgeStorage;
+    private BigDecimal knowledgeStorage;
 
-    private Integer pmSkill;
+    private BigDecimal pmSkill;
 
-    private Integer operationSkill;
+    private BigDecimal operationSkill;
 
-    private Integer dataAnalysis;
+    private BigDecimal dataAnalysis;
 
-    private Integer officeSkill;
+    private BigDecimal officeSkill;
 
-    private Integer pmoSkill;
+    private BigDecimal pmoSkill;
 
-    private Integer teamWork;
+    private BigDecimal teamWork;
 
-    private Integer promotionTraining;
+    private BigDecimal promotionTraining;
 
-    private Integer strategicThinking;
+    private BigDecimal strategicThinking;
 
-    private Integer businessThinking;
+    private BigDecimal businessThinking;
 
-    private Integer decisionSkill;
+    private BigDecimal decisionSkill;
 
-    private Integer innovationSkill;
+    private BigDecimal innovationSkill;
+
+    private Integer ranking;
+
+    private BigDecimal percent;
+
+    private BigDecimal score;
+
+    private String tencentGrade;
+
+    private String aliGrade;
+
+    private String byteGrade;
+
+    private String meituanGrade;
 }

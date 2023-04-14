@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -62,67 +63,92 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         UserPmEvaluationModel userPmEvaluationModel = new UserPmEvaluationModel();
         BeanUtils.copyProperties(userPmEvaluationDto, userPmEvaluationModel);
         String[] skills = userPmEvaluationDto.getSkills();
-
+        BigDecimal total = BigDecimal.ZERO;
         for (int i = 1; i <= 16; i++) {
             int index = i - 1;
-            Integer score = categoryItemMapper.getQuestionScore(String.valueOf(i), skills[index]);
+            BigDecimal score = categoryItemMapper.getQuestionScore(String.valueOf(i), skills[index]);
             if (null == score) {
-                score = 0;
+                score = BigDecimal.ZERO;
             }
             switch (i) {
                 case 1:
                     userPmEvaluationModel.setStudySkill(score);
+                    total = total.add(score);
                     break;
                 case 2:
                     userPmEvaluationModel.setResponsibility(score);
+                    total = total.add(score);
                     break;
                 case 3:
                     userPmEvaluationModel.setCommunication(score);
+                    total = total.add(score);
                     break;
                 case 4:
                     userPmEvaluationModel.setConfidence(score);
+                    total = total.add(score);
                     break;
                 case 5:
                     userPmEvaluationModel.setKnowledgeStorage(score);
+                    total = total.add(score);
                     break;
                 case 6:
                     userPmEvaluationModel.setPmSkill(score);
+                    total = total.add(score);
                     break;
                 case 7:
                     userPmEvaluationModel.setOperationSkill(score);
+                    total = total.add(score);
                     break;
                 case 8:
                     userPmEvaluationModel.setDataAnalysis(score);
+                    total = total.add(score);
                     break;
                 case 9:
                     userPmEvaluationModel.setOfficeSkill(score);
+                    total = total.add(score);
                     break;
                 case 10:
                     userPmEvaluationModel.setPmoSkill(score);
+                    total = total.add(score);
                     break;
                 case 11:
                     userPmEvaluationModel.setTeamWork(score);
+                    total = total.add(score);
                     break;
                 case 12:
                     userPmEvaluationModel.setPromotionTraining(score);
+                    total = total.add(score);
                     break;
                 case 13:
                     userPmEvaluationModel.setStrategicThinking(score);
+                    total = total.add(score);
                     break;
                 case 14:
                     userPmEvaluationModel.setBusinessThinking(score);
+                    total = total.add(score);
                     break;
                 case 15:
                     userPmEvaluationModel.setDecisionSkill(score);
+                    total = total.add(score);
                     break;
                 case 16:
                     userPmEvaluationModel.setInnovationSkill(score);
+                    total = total.add(score);
                     break;
                 default:
                     break;
             }
         }
+
+        userPmEvaluationModel.setScore(total);
+        userPmEvaluationModel.setRanking(2);
+        userPmEvaluationModel.setPercent(new BigDecimal(0.23));
+        userPmEvaluationModel.setTencentGrade("2-1");
+        userPmEvaluationModel.setAliGrade("P10");
+        userPmEvaluationModel.setMeituanGrade("5-3");
+        userPmEvaluationModel.setByteGrade("2-1");
         Integer result = userPmEvaluationMapper.insert(userPmEvaluationModel);
+        //TODO update user table ranking & percent
         if (result > 0) {
             return userPmEvaluationModel.getId();
         } else {
@@ -202,6 +228,8 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         try {
             UserModel userModel = new UserModel();
             BeanUtils.copyProperties(userDto, userModel);
+            userModel.setPercent(new BigDecimal(0.01));
+            userModel.setRanking(1);
             pmUserMapper.insert(userModel);
             return ApiResult.success(userDto.getOpenId());
         } catch (Exception ex) {

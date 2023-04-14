@@ -3,28 +3,30 @@ package com.tencent.wxcloudrun.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.tencent.wxcloudrun.client.WechatClient;
 import com.tencent.wxcloudrun.dao.CategoryItemMapper;
+import com.tencent.wxcloudrun.dao.PmCommentsMapper;
 import com.tencent.wxcloudrun.dao.PmUserMapper;
 import com.tencent.wxcloudrun.dao.UserPmEvaluationMapper;
-import com.tencent.wxcloudrun.dto.ApiResult;
-import com.tencent.wxcloudrun.dto.LoginDto;
-import com.tencent.wxcloudrun.dto.UserDto;
-import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
+import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
-import com.tencent.wxcloudrun.external.GetLastResultReq;
-import com.tencent.wxcloudrun.external.UserEvaluatedReq;
-import com.tencent.wxcloudrun.external.UserExistedReq;
+import com.tencent.wxcloudrun.external.*;
+import com.tencent.wxcloudrun.model.PmCommentsModel;
 import com.tencent.wxcloudrun.model.UserModel;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
+import com.tencent.wxcloudrun.util.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: lsp
@@ -49,12 +51,14 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Resource
     private CategoryItemMapper categoryItemMapper;
     @Resource
+    private PmCommentsMapper pmCommentsMapper;
+    @Resource
     private PmUserMapper pmUserMapper;
     @Resource
     private WechatClient wechatClient;
 
     @Override
-    public Boolean create(UserPmEvaluationDto userPmEvaluationDto) {
+    public Long create(UserPmEvaluationDto userPmEvaluationDto) {
         UserPmEvaluationModel userPmEvaluationModel = new UserPmEvaluationModel();
         BeanUtils.copyProperties(userPmEvaluationDto, userPmEvaluationModel);
         String[] skills = userPmEvaluationDto.getSkills();
@@ -118,7 +122,27 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
                     break;
             }
         }
-        return userPmEvaluationMapper.insert(userPmEvaluationModel) > 0;
+        Integer result = userPmEvaluationMapper.insert(userPmEvaluationModel);
+        if (result > 0) {
+            return userPmEvaluationModel.getId();
+        } else {
+            return 0L;
+        }
+
+    }
+
+    @Override
+    public List<UserPmEvaluationDto> getEvaluationList(GetEvaluationListReq getEvaluationListReq) {
+
+        List<UserPmEvaluationModel> userPmEvaluationModelList = userPmEvaluationMapper.selectByUserId(getEvaluationListReq.getOpenId());
+        if (CollectionUtils.isEmpty(userPmEvaluationModelList)) {
+            return null;
+        }
+        List<UserPmEvaluationDto> userPmEvaluationDtoList = Lists.newArrayList();
+        for (UserPmEvaluationModel userPmEvaluationModel : userPmEvaluationModelList) {
+            userPmEvaluationDtoList.add(new UserPmEvaluationDto(userPmEvaluationModel));
+        }
+        return userPmEvaluationDtoList;
     }
 
     @Override
@@ -156,11 +180,15 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
                 //return ApiResult.error(jsonObject.getString("errcode"), jsonObject.getString("errmsg"));
                 return ApiResult.error(ErrorCodeEnum.LOGIN_ERROR);
             }
-            LoginDto loginDto = LoginDto.builder().openid(String.valueOf(jsonObject.get("openid")))
-                    .unionid(String.valueOf(jsonObject.get("unionid")))
-                    .sessionKey(String.valueOf(jsonObject.get("session_key")))
-                    .build();
+            String unionid = String.valueOf(jsonObject.get("unionid"));
+            String sessionKey = String.valueOf(jsonObject.get("session_key"));
+            String openid = String.valueOf(jsonObject.get("openid"));
 
+            Map map = Maps.newHashMap();
+            map.put("unionid", unionid);
+            map.put("openId", openid);
+            String token = JwtUtils.createToken(map);
+            LoginDto loginDto = LoginDto.builder().openid(openid).unionid(unionid).sessionKey(sessionKey).token(token).build();
             return ApiResult.success(loginDto);
         } catch (Exception ex) {
             log.error("UserPmEvaluationImplService,wechatLogin, ex", ex);
@@ -186,7 +214,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     public Boolean userExisted(UserExistedReq userExistedReq) {
 
         UserModel userModel = pmUserMapper.selectOne(userExistedReq.getOpenId());
-        if(null == userModel) {
+        if (null == userModel) {
             return false;
         }
 
@@ -196,9 +224,44 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Override
     public Boolean userEvaluated(UserEvaluatedReq userEvaluatedReq) {
         UserPmEvaluationModel userPmEvaluationModel = userPmEvaluationMapper.selectLastOneByUserId(userEvaluatedReq.getOpenId());
-        if(null == userPmEvaluationModel) {
+        if (null == userPmEvaluationModel) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Long addComments(PmCommentsReq pmCommentsReq) {
+        PmCommentsModel pmCommentsModel = new PmCommentsModel(pmCommentsReq);
+        int result = pmCommentsMapper.insert(pmCommentsModel);
+        if (result > 0) {
+            return pmCommentsModel.getId();
+        }
+        return 0L;
+    }
+
+    @Override
+    public List<PmCommentsDto> getComments(PmGetCommentsReq pmGetCommentsReq) {
+
+        List<PmCommentsModel> pmCommentsModels = pmCommentsMapper.selectByOpenId(pmGetCommentsReq.getOpenId());
+
+
+        if (CollectionUtils.isEmpty(pmCommentsModels)) {
+            return null;
+        }
+
+        List<PmCommentsDto> pmCommentsDtos = Lists.newArrayList();
+
+        for (PmCommentsModel pmCommentsModel : pmCommentsModels) {
+            pmCommentsDtos.add(new PmCommentsDto(pmCommentsModel));
+        }
+        return pmCommentsDtos;
+    }
+
+    public PmCommentsDto getCommentsDetail(PmGetCommentsDetailReq pmGetCommentsDetailReq) {
+
+        PmCommentsModel pmCommentsModel = pmCommentsMapper.selectById(pmGetCommentsDetailReq.getId());
+
+        return new PmCommentsDto(pmCommentsModel);
     }
 }

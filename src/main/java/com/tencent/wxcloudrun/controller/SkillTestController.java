@@ -50,8 +50,17 @@ public class SkillTestController {
     }
 
     @PostMapping(value = "/userPmEvaluationCreate")
-    public ApiResult<Boolean> userPmEvaluationCreate(@RequestBody UserPmEvaluationDto userPmEvaluationDto){
-        Boolean result = userPmEvaluationService.create(userPmEvaluationDto);
+    public ApiResult<Long> userPmEvaluationCreate(@RequestBody UserPmEvaluationDto userPmEvaluationDto){
+        Long result = userPmEvaluationService.create(userPmEvaluationDto);
+        return ApiResult.success(result);
+    }
+
+    @PostMapping(value = "/getEvaluationList")
+    public ApiResult<List<UserPmEvaluationDto>> getEvaluationList(@RequestBody GetEvaluationListReq getEvaluationListReq){
+        List<UserPmEvaluationDto> result = userPmEvaluationService.getEvaluationList(getEvaluationListReq);
+        if(null == result) {
+            return ApiResult.success(null);
+        }
         return ApiResult.success(result);
     }
 
@@ -100,6 +109,26 @@ public class SkillTestController {
     @PostMapping(value = "/userEvaluated")
     public ApiResult<Boolean> userEvaluated(@RequestBody UserEvaluatedReq userEvaluatedReq){
         Boolean result = userPmEvaluationService.userEvaluated(userEvaluatedReq);
+        return ApiResult.success(result);
+    }
+
+
+    @PostMapping(value = "/addComments")
+    public ApiResult<Long> addComments(@RequestBody PmCommentsReq pmCommentsReq){
+        Long result = userPmEvaluationService.addComments(pmCommentsReq);
+        return ApiResult.success(result);
+    }
+
+    @PostMapping(value = "/listComments")
+    public ApiResult<List<PmCommentsDto>> listComments(@RequestBody PmGetCommentsReq pmGetCommentsReq){
+        List<PmCommentsDto> result = userPmEvaluationService.getComments(pmGetCommentsReq);
+        return ApiResult.success(result);
+    }
+
+
+    @PostMapping(value = "/detailComments")
+    public ApiResult<PmCommentsDto> detailComments(@RequestBody PmGetCommentsDetailReq pmGetCommentsDetailReq){
+        PmCommentsDto result = userPmEvaluationService.getCommentsDetail(pmGetCommentsDetailReq);
         return ApiResult.success(result);
     }
 }

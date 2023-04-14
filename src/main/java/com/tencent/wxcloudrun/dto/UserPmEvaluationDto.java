@@ -2,10 +2,12 @@ package com.tencent.wxcloudrun.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
@@ -20,6 +22,14 @@ import java.util.Date;
 @SuperBuilder
 @JsonSerialize
 public class UserPmEvaluationDto {
+
+    public UserPmEvaluationDto(UserPmEvaluationModel userPmEvaluationModel){
+        if (null == userPmEvaluationModel) {
+            return;
+        }
+        BeanUtils.copyProperties(userPmEvaluationModel, this);
+    }
+
     private Long id;
 
     private String openId;

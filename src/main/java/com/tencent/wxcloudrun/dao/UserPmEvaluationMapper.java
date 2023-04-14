@@ -4,6 +4,8 @@ import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface UserPmEvaluationMapper {
@@ -12,6 +14,8 @@ public interface UserPmEvaluationMapper {
 
 
     UserPmEvaluationModel selectLastOneByUserId(String openId);
+
+    List<UserPmEvaluationModel> selectByUserId(String openId);
 
 
     UserPmEvaluationModel selectById(Long id);

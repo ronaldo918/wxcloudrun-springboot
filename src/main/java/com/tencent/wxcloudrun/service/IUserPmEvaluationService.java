@@ -1,14 +1,10 @@
 package com.tencent.wxcloudrun.service;
 
 
-import com.tencent.wxcloudrun.dto.ApiResult;
-import com.tencent.wxcloudrun.dto.LoginDto;
-import com.tencent.wxcloudrun.dto.UserDto;
-import com.tencent.wxcloudrun.dto.UserPmEvaluationDto;
-import com.tencent.wxcloudrun.external.GetLastResultReq;
-import com.tencent.wxcloudrun.external.UserEvaluatedReq;
-import com.tencent.wxcloudrun.external.UserExistedReq;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.tencent.wxcloudrun.dto.*;
+import com.tencent.wxcloudrun.external.*;
+
+import java.util.List;
 
 /**
  * @author: lsp
@@ -17,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
  **/
 public interface IUserPmEvaluationService {
 
-    Boolean create(UserPmEvaluationDto userPmEvaluationDto);
+    Long create(UserPmEvaluationDto userPmEvaluationDto);
 
+
+    List<UserPmEvaluationDto> getEvaluationList(GetEvaluationListReq getEvaluationListReq);
 
     UserPmEvaluationDto detailUserPmEvaluation(Long id);
 
@@ -34,5 +32,9 @@ public interface IUserPmEvaluationService {
 
     Boolean userEvaluated(UserEvaluatedReq userEvaluatedReq);
 
+    Long addComments(PmCommentsReq pmCommentsReq);
 
+    List<PmCommentsDto> getComments(PmGetCommentsReq pmGetCommentsReq);
+
+    PmCommentsDto getCommentsDetail(PmGetCommentsDetailReq pmGetCommentsDetailReq);
 }

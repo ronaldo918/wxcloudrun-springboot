@@ -21,4 +21,6 @@ public class LoginDto {
     private String sessionKey;
     private String unionid;
 
+    private String token;
+
 }

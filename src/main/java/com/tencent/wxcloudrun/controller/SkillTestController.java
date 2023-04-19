@@ -12,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,6 +98,10 @@ public class SkillTestController {
 
     @PostMapping(value = "/addUser")
     public ApiResult<String> addUser(@RequestBody UserDto userDto){
+        String startWorkTime = userDto.getStartWorkTime() + "-01 00:00:00";
+        String format = "yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat sdf1 = new SimpleDateFormat(format);
+        userDto.setStartWorkTime(startWorkTime);
         ApiResult<String> result = userPmEvaluationService.addUser(userDto);
         return result;
     }

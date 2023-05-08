@@ -319,6 +319,8 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             BeanUtils.copyProperties(userPmEvaluationModelLast, userPmEvaluationDtoLast);
             userPmEvaluationDtoLast.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDtoLast.getRanking()));
             result.add(userPmEvaluationDtoLast);
+        } else {
+            result.add(null);
         }
         UserPmEvaluationModel userPmEvaluationModelFirst = userPmEvaluationMapper.selectFirstOneByUserId(getLastAndFirstResultReq.getOpenId());
         if (null != userPmEvaluationModelFirst) {
@@ -326,6 +328,8 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             BeanUtils.copyProperties(userPmEvaluationModelFirst, userPmEvaluationDtoFirst);
             userPmEvaluationDtoFirst.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDtoFirst.getRanking()));
             result.add(userPmEvaluationDtoFirst);
+        } else {
+            result.add(null);
         }
 
         return result;

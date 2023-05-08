@@ -62,6 +62,14 @@
     order by create_time desc limit 1
   </select>
 
+  <select id="selectFirstOneByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_pm_evaluation
+    where open_id = #{openId,jdbcType=VARCHAR}
+    order by create_time asc limit 1
+  </select>
+
   <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

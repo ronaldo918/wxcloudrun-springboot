@@ -27,6 +27,8 @@ public enum ErrorCodeEnum {
 
     INSERT_USER_ERROR("000008", "add user error", "新增用户错误"),
 
+    PARSE_DATE_ERROR("000009", "parse date error", "转换时间一长");
+
     ;
 
     private String value;

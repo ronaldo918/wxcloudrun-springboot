@@ -4,6 +4,7 @@ package com.tencent.wxcloudrun.service;
 import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.external.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  **/
 public interface IUserPmEvaluationService {
 
-    Long create(UserPmEvaluationDto userPmEvaluationDto);
+    Long create(UserPmEvaluationDto userPmEvaluationDto) throws ParseException;
 
 
     List<UserPmEvaluationDto> getEvaluationList(GetEvaluationListReq getEvaluationListReq);
@@ -37,4 +38,6 @@ public interface IUserPmEvaluationService {
     List<PmCommentsDto> getComments(PmGetCommentsReq pmGetCommentsReq);
 
     PmCommentsDto getCommentsDetail(PmGetCommentsDetailReq pmGetCommentsDetailReq);
+
+    List<UserPmEvaluationDto> getLastAndFirstResult(GetLastAndFirstResultReq getLastAndFirstResultReq);
 }

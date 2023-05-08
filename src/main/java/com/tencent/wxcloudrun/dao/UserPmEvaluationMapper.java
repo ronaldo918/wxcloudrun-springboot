@@ -15,6 +15,8 @@ public interface UserPmEvaluationMapper {
 
     UserPmEvaluationModel selectLastOneByUserId(String openId);
 
+    UserPmEvaluationModel selectFirstOneByUserId(String openId);
+
     List<UserPmEvaluationModel> selectByUserId(String openId);
 
 

@@ -12,6 +12,7 @@ import com.tencent.wxcloudrun.dao.PmUserMapper;
 import com.tencent.wxcloudrun.dao.UserPmEvaluationMapper;
 import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
+import com.tencent.wxcloudrun.enums.RankingEnum;
 import com.tencent.wxcloudrun.external.*;
 import com.tencent.wxcloudrun.model.PmCommentsModel;
 import com.tencent.wxcloudrun.model.UserModel;
@@ -26,8 +27,11 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * @author: lsp
@@ -59,7 +63,16 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     private WechatClient wechatClient;
 
     @Override
-    public Long create(UserPmEvaluationDto userPmEvaluationDto) {
+    public Long create(UserPmEvaluationDto userPmEvaluationDto) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+
+        // 格式化时间
+        String dateStr = sdf.format(userPmEvaluationDto.getEvaluationDateTimeStamp());
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        userPmEvaluationDto.setEvaluationDate(sdf.parse(dateStr));
+
+
         UserPmEvaluationModel userPmEvaluationModel = new UserPmEvaluationModel();
         BeanUtils.copyProperties(userPmEvaluationDto, userPmEvaluationModel);
         String[] skills = userPmEvaluationDto.getSkills();
@@ -166,7 +179,9 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         }
         List<UserPmEvaluationDto> userPmEvaluationDtoList = Lists.newArrayList();
         for (UserPmEvaluationModel userPmEvaluationModel : userPmEvaluationModelList) {
-            userPmEvaluationDtoList.add(new UserPmEvaluationDto(userPmEvaluationModel));
+            UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto(userPmEvaluationModel);
+            userPmEvaluationDto.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDto.getRanking()));
+            userPmEvaluationDtoList.add(userPmEvaluationDto);
         }
         return userPmEvaluationDtoList;
     }
@@ -181,6 +196,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         }
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
         BeanUtils.copyProperties(userPmEvaluationModel, userPmEvaluationDto);
+        userPmEvaluationDto.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDto.getRanking()));
         return userPmEvaluationDto;
 
     }
@@ -193,6 +209,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         }
         UserPmEvaluationDto userPmEvaluationDto = new UserPmEvaluationDto();
         BeanUtils.copyProperties(userPmEvaluationModel, userPmEvaluationDto);
+        userPmEvaluationDto.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDto.getRanking()));
         return userPmEvaluationDto;
     }
 
@@ -291,5 +308,26 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
         PmCommentsModel pmCommentsModel = pmCommentsMapper.selectById(pmGetCommentsDetailReq.getId());
 
         return new PmCommentsDto(pmCommentsModel);
+    }
+
+    @Override
+    public List<UserPmEvaluationDto> getLastAndFirstResult(GetLastAndFirstResultReq getLastAndFirstResultReq) {
+        List<UserPmEvaluationDto> result = Lists.newArrayList();
+        UserPmEvaluationModel userPmEvaluationModelLast = userPmEvaluationMapper.selectLastOneByUserId(getLastAndFirstResultReq.getOpenId());
+        if (null != userPmEvaluationModelLast) {
+            UserPmEvaluationDto userPmEvaluationDtoLast = new UserPmEvaluationDto();
+            BeanUtils.copyProperties(userPmEvaluationModelLast, userPmEvaluationDtoLast);
+            userPmEvaluationDtoLast.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDtoLast.getRanking()));
+            result.add(userPmEvaluationDtoLast);
+        }
+        UserPmEvaluationModel userPmEvaluationModelFirst = userPmEvaluationMapper.selectFirstOneByUserId(getLastAndFirstResultReq.getOpenId());
+        if (null != userPmEvaluationModelFirst) {
+            UserPmEvaluationDto userPmEvaluationDtoFirst = new UserPmEvaluationDto();
+            BeanUtils.copyProperties(userPmEvaluationModelFirst, userPmEvaluationDtoFirst);
+            userPmEvaluationDtoFirst.setRankingDesc(RankingEnum.parseToDesc(userPmEvaluationDtoFirst.getRanking()));
+            result.add(userPmEvaluationDtoFirst);
+        }
+
+        return result;
     }
 }

@@ -34,9 +34,10 @@ public class UserPmEvaluationDto {
     private Long id;
 
     private String openId;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date evaluationDate;
+
+    private Long evaluationDateTimeStamp;
 
     private String[] skills;
 
@@ -73,6 +74,8 @@ public class UserPmEvaluationDto {
     private BigDecimal innovationSkill;
 
     private Integer ranking;
+
+    private String rankingDesc;
 
     private BigDecimal percent;
 

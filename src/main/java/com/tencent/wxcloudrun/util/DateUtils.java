@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * @Date 2022-07-15 15:46
  **/
 public class DateUtils {
-    private static String DATE_FORMAT = "yyyy-MM-dd";
+    public static String DATE_FORMAT = "yyyy-MM-dd";
 
     public static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

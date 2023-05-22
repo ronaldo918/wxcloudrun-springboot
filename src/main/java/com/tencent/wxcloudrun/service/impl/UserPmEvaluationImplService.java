@@ -15,10 +15,12 @@ import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.enums.RankingEnum;
 import com.tencent.wxcloudrun.external.*;
 import com.tencent.wxcloudrun.model.PmCommentsModel;
+import com.tencent.wxcloudrun.model.RankingGradeModel;
 import com.tencent.wxcloudrun.model.UserModel;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
 import com.tencent.wxcloudrun.util.JwtUtils;
+import com.tencent.wxcloudrun.util.RankingUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -153,13 +155,20 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
             }
         }
 
+
+//        rankingGradeModel = RankingUtils.getRankingGrade(total);
+        Integer rankingInt = RankingUtils.getRanking(total);
         userPmEvaluationModel.setScore(total);
-        userPmEvaluationModel.setRanking(2);
-        userPmEvaluationModel.setPercent(new BigDecimal(0.23));
-        userPmEvaluationModel.setTencentGrade("2-1");
-        userPmEvaluationModel.setAliGrade("P10");
-        userPmEvaluationModel.setMeituanGrade("5-3");
-        userPmEvaluationModel.setByteGrade("2-1");
+        userPmEvaluationModel.setRanking(rankingInt);
+
+        RankingGradeModel rankingGradeModel = new RankingGradeModel();
+        rankingGradeModel = RankingEnum.parseToRankingGradeModel(rankingInt);
+
+        userPmEvaluationModel.setPercent(rankingGradeModel.getPercent());
+        userPmEvaluationModel.setTencentGrade(rankingGradeModel.getTencentGrade());
+        userPmEvaluationModel.setAliGrade(rankingGradeModel.getAliGrade());
+        userPmEvaluationModel.setMeituanGrade(rankingGradeModel.getMeituanGrade());
+        userPmEvaluationModel.setByteGrade(rankingGradeModel.getByteGrade());
         Integer result = userPmEvaluationMapper.insert(userPmEvaluationModel);
         //TODO update user table ranking & percent
         if (result > 0) {

@@ -79,13 +79,13 @@ public class RankingUtils {
             rankingGradeModel.setMeituanGrade("3-3");
             rankingGradeModel.setRanking(RankingEnum.RANKING_10.getValue());
         } else if (score.compareTo(new BigDecimal(53.5)) > -1
-                && score.compareTo(new BigDecimal(61)) == -1) {
+                && score.compareTo(new BigDecimal(60.5)) == -1) {
             rankingGradeModel.setTencentGrade("4-1");
             rankingGradeModel.setAliGrade("P9");
             rankingGradeModel.setByteGrade("3-2");
             rankingGradeModel.setMeituanGrade("4-1");
             rankingGradeModel.setRanking(RankingEnum.RANKING_11.getValue());
-        } else if (score.compareTo(new BigDecimal(61)) > -1
+        } else if (score.compareTo(new BigDecimal(60.5)) > -1
                 && score.compareTo(new BigDecimal(63)) == -1) {
             rankingGradeModel.setTencentGrade("4-2");
             rankingGradeModel.setAliGrade("P10");
@@ -93,20 +93,20 @@ public class RankingUtils {
             rankingGradeModel.setMeituanGrade("4-2");
             rankingGradeModel.setRanking(RankingEnum.RANKING_12.getValue());
         } else if (score.compareTo(new BigDecimal(63)) > -1
-                && score.compareTo(new BigDecimal(68)) == -1) {
+                && score.compareTo(new BigDecimal(67.5)) == -1) {
             rankingGradeModel.setTencentGrade("4-3");
             rankingGradeModel.setAliGrade("P11");
             rankingGradeModel.setByteGrade("4-2");
             rankingGradeModel.setMeituanGrade("4-3");
             rankingGradeModel.setRanking(RankingEnum.RANKING_13.getValue());
-        } else if (score.compareTo(new BigDecimal(68)) > -1
-                && score.compareTo(new BigDecimal(71)) == -1) {
+        } else if (score.compareTo(new BigDecimal(67.5)) > -1
+                && score.compareTo(new BigDecimal(70)) == -1) {
             rankingGradeModel.setTencentGrade("5-1");
             rankingGradeModel.setAliGrade("P12");
             rankingGradeModel.setByteGrade("4-2");
             rankingGradeModel.setMeituanGrade("5-1");
             rankingGradeModel.setRanking(RankingEnum.RANKING_14.getValue());
-        } else if (score.compareTo(new BigDecimal(71)) > -1
+        } else if (score.compareTo(new BigDecimal(70)) > -1
                 && score.compareTo(new BigDecimal(74)) == -1) {
             rankingGradeModel.setTencentGrade("5-2");
             rankingGradeModel.setAliGrade("P13");

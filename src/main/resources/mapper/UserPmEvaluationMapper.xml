@@ -78,6 +78,13 @@
     order by create_time desc limit 1
   </select>
 
+  <select id="getCount"  resultType="java.lang.Integer">
+    select
+      count(*)
+    from user_pm_evaluation
+  </select>
+
+
   <insert id="insert" parameterType="com.tencent.wxcloudrun.model.UserPmEvaluationModel">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()

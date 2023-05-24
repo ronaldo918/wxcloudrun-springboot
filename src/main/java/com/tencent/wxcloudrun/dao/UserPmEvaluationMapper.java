@@ -23,5 +23,8 @@ public interface UserPmEvaluationMapper {
     UserPmEvaluationModel selectById(Long id);
 
 
+    Integer getCount();
+
+
 
 }

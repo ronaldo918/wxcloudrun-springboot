@@ -180,6 +180,11 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     }
 
     @Override
+    public Integer getCount() {
+        return userPmEvaluationMapper.getCount();
+    }
+
+    @Override
     public List<UserPmEvaluationDto> getEvaluationList(GetEvaluationListReq getEvaluationListReq) {
 
         List<UserPmEvaluationModel> userPmEvaluationModelList = userPmEvaluationMapper.selectByUserId(getEvaluationListReq.getOpenId());

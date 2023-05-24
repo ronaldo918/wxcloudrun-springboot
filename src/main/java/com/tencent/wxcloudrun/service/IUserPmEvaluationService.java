@@ -16,6 +16,7 @@ public interface IUserPmEvaluationService {
 
     Long create(UserPmEvaluationDto userPmEvaluationDto) throws ParseException;
 
+    Integer getCount();
 
     List<UserPmEvaluationDto> getEvaluationList(GetEvaluationListReq getEvaluationListReq);
 

@@ -41,8 +41,10 @@ public class SkillTestController {
 
     @PostMapping(value = "/finishedNum")
     public ApiResult<FinishedNumResp> getFinishedNumber(FinishedNumReq finishedNumReq) {
+        Integer count = userPmEvaluationService.getCount();
 
-        FinishedNumResp finishedNumResp = FinishedNumResp.builder().finishedNumber(50).build();
+
+        FinishedNumResp finishedNumResp = FinishedNumResp.builder().finishedNumber(count).build();
         return ApiResult.success(finishedNumResp);
     }
 
@@ -151,9 +153,9 @@ public class SkillTestController {
         TimeUtils time = new TimeUtils(dateStr);
         BigDecimal elapsedDec = new BigDecimal(time.elapsedTime());
         BigDecimal totalDec = new BigDecimal(time.daysYear());
-        BigDecimal percent = elapsedDec.divide(totalDec,2,BigDecimal.ROUND_HALF_UP);
-                TimeDto timeDto = TimeDto.builder().total(time.daysYear()).left(time.daysLeft())
-                        .elapsed(time.elapsedTime()).percent(percent).build();
+        BigDecimal percent = elapsedDec.divide(totalDec, 2, BigDecimal.ROUND_HALF_UP);
+        TimeDto timeDto = TimeDto.builder().total(time.daysYear()).left(time.daysLeft())
+                .elapsed(time.elapsedTime()).percent(percent).build();
         return ApiResult.success(timeDto);
     }
 

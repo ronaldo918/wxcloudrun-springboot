@@ -114,7 +114,7 @@ public class RankingUtils {
             rankingGradeModel.setMeituanGrade("5-2");
             rankingGradeModel.setRanking(RankingEnum.RANKING_15.getValue());
         } else if (score.compareTo(new BigDecimal(74)) > -1
-                && score.compareTo(new BigDecimal(77)) == -1) {
+                && score.compareTo(new BigDecimal(77)) < 1) {
             rankingGradeModel.setTencentGrade("5-3");
             rankingGradeModel.setAliGrade("P14");
             rankingGradeModel.setByteGrade("5-2");

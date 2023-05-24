@@ -133,52 +133,52 @@ public class RankingUtils {
 
     public static Integer getRanking(BigDecimal score) {
         RankingGradeModel rankingGradeModel = new RankingGradeModel();
-        if (score.compareTo(BigDecimal.ZERO) == 0) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_1.getValue());
-        } else if (score.compareTo(BigDecimal.ZERO) > -1
+        if (score.compareTo(BigDecimal.ZERO) > -1
                 && score.compareTo(new BigDecimal(6)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_2.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_1.getValue());
         } else if (score.compareTo(new BigDecimal(6)) > -1
                 && score.compareTo(new BigDecimal(15)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_3.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_2.getValue());
         } else if (score.compareTo(new BigDecimal(15)) > -1
                 && score.compareTo(new BigDecimal(20)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_4.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_3.getValue());
         } else if (score.compareTo(new BigDecimal(20)) > -1
                 && score.compareTo(new BigDecimal(28)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_5.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_4.getValue());
         } else if (score.compareTo(new BigDecimal(28)) > -1
                 && score.compareTo(new BigDecimal(33.5)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_6.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_5.getValue());
         } else if (score.compareTo(new BigDecimal(33.5)) > -1
                 && score.compareTo(new BigDecimal(36.5)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_7.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_6.getValue());
         } else if (score.compareTo(new BigDecimal(36.5)) > -1
                 && score.compareTo(new BigDecimal(45)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_8.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_7.getValue());
         } else if (score.compareTo(new BigDecimal(45)) > -1
                 && score.compareTo(new BigDecimal(50)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_9.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_8.getValue());
         } else if (score.compareTo(new BigDecimal(50)) > -1
                 && score.compareTo(new BigDecimal(53.5)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_10.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_9.getValue());
         } else if (score.compareTo(new BigDecimal(53.5)) > -1
                 && score.compareTo(new BigDecimal(61)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_11.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_10.getValue());
         } else if (score.compareTo(new BigDecimal(61)) > -1
                 && score.compareTo(new BigDecimal(63)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_12.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_11.getValue());
         } else if (score.compareTo(new BigDecimal(63)) > -1
                 && score.compareTo(new BigDecimal(68)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_13.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_12.getValue());
         } else if (score.compareTo(new BigDecimal(68)) > -1
                 && score.compareTo(new BigDecimal(71)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_14.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_13.getValue());
         } else if (score.compareTo(new BigDecimal(71)) > -1
                 && score.compareTo(new BigDecimal(74)) == -1) {
-            rankingGradeModel.setRanking(RankingEnum.RANKING_15.getValue());
+            rankingGradeModel.setRanking(RankingEnum.RANKING_14.getValue());
         } else if (score.compareTo(new BigDecimal(74)) > -1
                 && score.compareTo(new BigDecimal(77)) == -1) {
+            rankingGradeModel.setRanking(RankingEnum.RANKING_15.getValue());
+        } else if (score.compareTo(new BigDecimal(77)) > -1) {
             rankingGradeModel.setRanking(RankingEnum.RANKING_16.getValue());
         } else {
             rankingGradeModel.setRanking(RankingEnum.RANKING_9.getValue());

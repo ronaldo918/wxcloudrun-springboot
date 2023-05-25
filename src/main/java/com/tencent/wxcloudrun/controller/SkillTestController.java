@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.tencent.wxcloudrun.dto.*;
 import com.tencent.wxcloudrun.enums.ErrorCodeEnum;
 import com.tencent.wxcloudrun.external.*;
@@ -111,6 +112,7 @@ public class SkillTestController {
         SimpleDateFormat sdf1 = new SimpleDateFormat(format);
         userDto.setStartWorkTime(startWorkTime);
         ApiResult<String> result = userPmEvaluationService.addUser(userDto);
+        log.info("SkillTestController.addUser, result={}", JSON.toJSONString(result));
         return result;
     }
 

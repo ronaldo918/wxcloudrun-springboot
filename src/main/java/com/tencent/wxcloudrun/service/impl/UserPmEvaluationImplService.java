@@ -19,6 +19,7 @@ import com.tencent.wxcloudrun.model.RankingGradeModel;
 import com.tencent.wxcloudrun.model.UserModel;
 import com.tencent.wxcloudrun.model.UserPmEvaluationModel;
 import com.tencent.wxcloudrun.service.IUserPmEvaluationService;
+import com.tencent.wxcloudrun.util.DesUtils;
 import com.tencent.wxcloudrun.util.JwtUtils;
 import com.tencent.wxcloudrun.util.RankingUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
+import static com.tencent.wxcloudrun.util.DesUtils.PASSWORD;
 
 /**
  * @author: lsp
@@ -230,7 +233,8 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     @Override
     public ApiResult<LoginDto> wechatLogin(String jsCode) {
         try {
-            String result = wechatClient.jscode2session(appId, appSecret, jsCode, grantType);
+
+            String result = wechatClient.jscode2session(appId,DesUtils.decrypt(PASSWORD,appSecret) , jsCode, grantType);
             log.info("UserPmEvaluationImplService,wechatLogin, result={}", result);
             JSONObject jsonObject = JSON.parseObject(result);
             if (null == jsonObject || (jsonObject.containsKey("errcode") && !jsonObject.get("errcode").equals(0))) {

@@ -23,5 +23,5 @@ mybatis:
 
 app:
   id: wxbc5a109c3f8b9821
-  secret: af5db3e769f5a248887eeae60fa49230
+  secret: K8dkSHbh/nLOkx9E8qwkdbFrp3Vt+JId0payzg/56PmuzdGrRXL7Vw==
   grantType: authorization_code

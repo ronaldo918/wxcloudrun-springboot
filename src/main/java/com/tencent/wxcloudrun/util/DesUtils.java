@@ -172,7 +172,7 @@ public class DesUtils {
     }
 
     public static void main(String[] args) {
-        String appS = "test111";
+        String appS = "test122";
 
         String encryptKey = DesUtils.encrypt(PASSWORD,appS);
 

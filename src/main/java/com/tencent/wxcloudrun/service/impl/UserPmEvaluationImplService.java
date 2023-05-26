@@ -234,7 +234,7 @@ public class UserPmEvaluationImplService implements IUserPmEvaluationService {
     public ApiResult<LoginDto> wechatLogin(String jsCode) {
         try {
 
-            String result = wechatClient.jscode2session(appId,DesUtils.decrypt(PASSWORD,appSecret) , jsCode, grantType);
+            String result = wechatClient.jscode2session(DesUtils.decrypt(PASSWORD,appId),DesUtils.decrypt(PASSWORD,appSecret) , jsCode, grantType);
             log.info("UserPmEvaluationImplService,wechatLogin, result={}", result);
             JSONObject jsonObject = JSON.parseObject(result);
             if (null == jsonObject || (jsonObject.containsKey("errcode") && !jsonObject.get("errcode").equals(0))) {

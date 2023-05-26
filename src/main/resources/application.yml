@@ -22,6 +22,6 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 app:
-  id: wxbc5a109c3f8b9821
-  secret: K8dkSHbh/nLOkx9E8qwkdbFrp3Vt+JId0payzg/56PmuzdGrRXL7Vw==
+  id: E+PGvzgnDtf0jsA3aN18osK3Fc2WRZXj
+  secret: lMM/HT4Y5Iot0Kw4GgPk3GT6cbd4P2JMQ00g5+yYYPQI+1zPmjQysw==
   grantType: authorization_code
